@@ -1,0 +1,59 @@
+:root {
+    --col-height: 125px;
+}
+
+.rectangle {
+    width: 300px;
+    /* Chiều rộng của khối */
+    height: var(--col-height);
+    /* Chiều cao của khối */
+    background-size: cover;
+    /* Kích thước ảnh sẽ được hiển thị */
+    background-position: center;
+    /* Vị trí căn giữa của ảnh */
+    background-repeat: no-repeat;
+    /* Không lặp lại hình ảnh */
+}
+
+.circle {
+    position: absolute;
+    /* Tùy chỉnh vị trí tuyệt đối của nội dung */
+    width: 100px;
+    /* Kích thước của hình tròn */
+    height: 100px;
+    /* Kích thước của hình tròn */
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    /* Làm cho hình ảnh tròn */
+    border: 2px solid #ccc;
+    margin-left: 20px;
+}
+
+.content {
+    position: absolute;
+    /* Tùy chỉnh vị trí tuyệt đối của nội dung */
+    top: 50%;
+    transform: translateY(-50%);
+    left: 30%;
+    color: white;
+    /* Màu văn bản */
+    text-align: center;
+}
+
+.overlay {
+    position: absolute;
+    /* Định vị tuyệt đối */
+    width: 80%;
+    /* Chiều rộng của overlay bằng với khối */
+    height: 100%;
+    /* Chiều cao của overlay bằng với khối */
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Màu xám mờ với độ mờ là 50% */
+    border-radius: 5%;
+    /* Làm cho hình ảnh tròn */
+}
+
+.textmodel {
+    color: red;
+}

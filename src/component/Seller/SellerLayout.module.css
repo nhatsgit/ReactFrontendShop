@@ -1,0 +1,175 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: white;
+    color: black;
+    width: 100%;
+    border-bottom: 2px solid #ccc;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.nav1 {
+    font-size: 20px;
+}
+
+.nav2 {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav2 a {
+    padding: 6px 12px;
+}
+
+.nav2 a:hover {
+    background-color: #f0f0f0;
+}
+
+.shopTitle {
+    font-size: 20px;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+}
+
+.homeLink {
+    margin-top: 20px;
+    color: #007bff;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.homeLink:hover {
+    text-decoration: underline;
+}
+
+.navbarNav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.rectangle {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    text-align: center;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+a {
+    color: #333;
+}
+
+a:hover {
+    opacity: .8;
+}
+
+.mainContent {
+    display: flex;
+    text-align: left;
+}
+
+.leftNavbar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #f8f9fa;
+    width: 220px;
+    overflow-y: auto;
+    height: 100vh;
+    padding: inherit;
+    transition: all 0.3s ease;
+}
+
+.leftNavbar.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+
+.leftNavLinks {
+    padding: inherit;
+}
+
+
+.navSection {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.subNavLinks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.subNavLinks li {
+    margin-bottom: 8px;
+}
+
+.subNavLinks a {
+    color: black;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.subNavLinks a:hover {
+    text-decoration: underline;
+}
+
+.childrenContent {
+    flex-grow: 1;
+    padding: 20px;
+}

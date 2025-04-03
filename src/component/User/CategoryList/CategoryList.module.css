@@ -1,0 +1,60 @@
+.wrapper {
+    position: relative;
+    width: 94%;
+    overflow: hidden;
+}
+
+.categoryContainer {
+    display: flex;
+    overflow-x: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.column {
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+    margin-left: 10px;
+}
+
+.category {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.category img {
+    width: 120px;
+    height: auto;
+}
+
+.category a {
+    text-decoration: none;
+    color: #000;
+}
+
+.category a:hover {
+    color: #007BFF;
+}
+
+.thisButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.buttonLeft {
+    left: 0;
+}
+
+.buttonRight {
+    right: 0;
+}

@@ -1,0 +1,9 @@
+.orderDetail {
+    border-top: 1px solid grey;
+    width: 99%;
+}
+
+.orderDetail img {
+    height: 50px;
+    width: 50px;
+}

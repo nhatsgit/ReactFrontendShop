@@ -1,0 +1,32 @@
+.registerContainer {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.backHome {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.myInput {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #0000FF;
+}
