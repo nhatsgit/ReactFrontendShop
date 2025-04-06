@@ -101,7 +101,7 @@ export function QueryProduct({
             shopId: shopId,
             minPrice: minPrice,
             maxPrice: maxPrice,
-            pageNumber: pageNumber,
+            page: pageNumber,
             pageSize: pageSize,
         }
     }).then((res) => {

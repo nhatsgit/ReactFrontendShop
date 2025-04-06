@@ -35,7 +35,7 @@ function CategoryFilter({ categories, HandleFilterCallBack }) {
                             <h4 className="panel-title" style={{ color: "gray", display: "flex", alignItems: "center" }}>
                                 <label style={{ alignItems: "center", margin: "5px 0px 5px 30px" }}>
                                     <input type="radio" id="option1" name="ratio"
-                                        value={category.id} onChange={() => { }} onClick={(e) => HandleCheckedFilter(e.target.value)} checked={currentId == category.id}
+                                        value={category._id} onChange={() => { }} onClick={(e) => HandleCheckedFilter(e.target.value)} checked={currentId == category._id}
                                         style={{ marginRight: "10px" }} />
                                     {category.tenLoai}
                                 </label>

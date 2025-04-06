@@ -40,7 +40,7 @@ function Slider({ products }) {
                                                 <button type="button" onClick={() => { HandleAddToCart(product.productId) }} className="btn btn-default get">Thêm vào giỏ</button>
                                             </div>
                                             <div className="col-sm-6">
-                                                <img src={`https://localhost:7233${product.anhDaiDien}`} width={441} height={215} className="girl img-responsive" alt="" />
+                                                <img src={`${process.env.REACT_APP_API_URL}${product.anhDaiDien}`} width={441} height={215} className="girl img-responsive" alt="" />
                                             </div>
                                         </div>
                                     ))}

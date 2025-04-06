@@ -108,7 +108,7 @@ function SearchForm() {
                     <div id="suggestions" style={{ display: 'block' }}>
                         {
                             suggestions.map((result, index) => (
-                                <li key={index} onClick={() => setKeyword(result)}>{result}</li>
+                                <li key={index} onClick={() => setKeyword(result)}>{result.tenSp}</li>
                             ))
                         }
                     </div>

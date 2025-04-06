@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 const request = axios.create({
-    baseURL: `${process.env.REACT_APP_API_URL}/api/`,
+    baseURL: `${process.env.REACT_APP_API_URL}/`,
 });
 
 request.interceptors.request.use(
@@ -21,7 +21,7 @@ request.interceptors.request.use(
 );
 
 request.interceptors.response.use(
-    response => response,
+    response => response.data,
     (error) => {
         if (error.response) {
             // Xử lý lỗi 401 (Unauthorized)

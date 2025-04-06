@@ -2,7 +2,6 @@ import Slider from "../../../component/User/Slider/Slider";
 import ListProduct from "../../../component/User/Products/ListProduct";
 import * as ProductService from "../../../apiServices/ProductService";
 import { useEffect, useState } from "react";
-import CategoryList from "../../../component/User/CategoryList/CategoryList";
 
 function Home() {
     const [products, setProducts] = useState([]);
@@ -28,7 +27,7 @@ function Home() {
     return (
         <>
             <Slider products={slider} />
-            <CategoryList></CategoryList>
+            {/* <CategoryList></CategoryList> */}
             <section>
                 <div className="container">
                     <div className="row">

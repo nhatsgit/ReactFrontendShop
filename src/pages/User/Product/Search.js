@@ -21,7 +21,7 @@ function Search() {
         const fetchApi = async () => {
             try {
                 const res = await ProductService.QueryProduct({ keyword: keyword, pageSize: 9, pageNumber: currentPage });
-                const categories = await ProductService.GetCategoriesFromQuery({ keyword: keyword });
+                const categories = await ProductService.GetCategories();
                 setProducts(res);
                 setCurrentPage(res.pageNumber)
                 settotalPage(res.pageCount)
@@ -41,7 +41,7 @@ function Search() {
                 top: 0,
                 behavior: 'smooth',
             });
-
+            console.log(currentFilter);
             setProducts(res)
             setCurrentPage(res.pageNumber)
             settotalPage(res.pageCount)
@@ -80,7 +80,7 @@ function Search() {
             setProducts(res)
             setCurrentPage(res.pageNumber)
             settotalPage(res.pageCount)
-            setCurrentFilter({ ...currentFilter, _minPrice, _maxPrice })
+            setCurrentFilter({ ...currentFilter, minPrice: _minPrice, maxPrice: _maxPrice })
 
         } catch (error) {
             console.error("Error fetching data:", error);
