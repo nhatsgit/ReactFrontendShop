@@ -113,7 +113,7 @@ function Header() {
                                                 />
                                             </li>
                                             <li className="nav-item">
-                                                <Link to={`${routePaths.account}`} className="nav-link text-dark" id="login" > Hello {user.userName}</Link>
+                                                <Link to={`${routePaths.account}`} className="nav-link text-dark" id="login" > Hello {user.username}</Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link to="/" onClick={HandleLogout} className="nav-link text-dark" id="register" > Đăng Xuất</Link>

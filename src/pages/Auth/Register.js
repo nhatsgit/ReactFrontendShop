@@ -1,25 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Input, Button, Upload, Typography, notification, Modal } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { UserRegister } from '../../apiServices/AuthService';
 import AddressSelector from '../../component/Context/Address/AddressSelector';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../component/Context/AuthContext';
 const { Title, Text } = Typography;
 
 
 const Register = () => {
     const [form] = Form.useForm();
     const [avatarPreview, setAvatarPreview] = useState(null);
-    const [isAddressSelectorVisible, setIsAddressSelectorVisible] = useState(false);
-    const [address, setAddress] = useState(null);
-
-    const handleAddressChange = () => {
-        setIsAddressSelectorVisible(true);
-    };
-
-    const handleAddressSelectorClose = () => {
-        setIsAddressSelectorVisible(false);
-    };
+    const { auth, setAuth } = useContext(AuthContext);
+    const navigate = useNavigate();
     const handleAvatarChange = (info) => {
         const file = info.file.originFileObj;
         if (file) {
@@ -32,10 +25,7 @@ const Register = () => {
     };
 
     const onFinish = async (values) => {
-        if (!address) {
-            notification.error({ message: 'Lỗi', description: 'Vui lòng chọn địa chỉ!' });
-            return;
-        }
+
         try {
             const avatarFile = values.avatarImage?.[0]?.originFileObj; // Lấy file đầu tiên từ danh sách
             if (!avatarFile) {
@@ -44,22 +34,26 @@ const Register = () => {
             }
 
             const response = await UserRegister({ ...values, avatarImage: avatarFile });
-            if (response && Array.isArray(response)) {
-                const errors = response;
+            if (response) {
 
-                const duplicateUserError = errors.find((e) => e.code === 'DuplicateUserName');
-                if (duplicateUserError) {
-                    notification.error({
-                        message: 'Lỗi đăng ký!',
-                        description: duplicateUserError.description,
-                    });
-                    return;
-                }
-            }
-            if (response == true) {
                 notification.success({ message: 'Đăng ký thành công!' });
+                localStorage.setItem('ACCESS_TOKEN', response);
+                localStorage.setItem('USER', form.getFieldValue('userName'));
+                notification.success({
+                    message: 'Đăng nhập thành công',
+                    description: `Xin chào ${form.getFieldValue('userName')}`,
+                });
+                setAuth({
+                    isAuthenticated: true,
+                    user: { username: form.getFieldValue('userName') },
+                });
+
+                const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/';
+                sessionStorage.removeItem('redirectAfterLogin');
+                navigate(redirectUrl);
             }
         } catch (error) {
+            console.error('Error during registration:', error);
             notification.error({ message: 'Lỗi đăng ký!', description: 'Có lỗi xảy ra trong quá trình đăng ký!' });
         }
     };
@@ -135,31 +129,12 @@ const Register = () => {
 
                     <Form.Item
                         label="Địa chỉ"
+                        name="address"
                         rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
                     >
-                        <Input.TextArea
-                            value={address}
-                            placeholder="Chọn địa chỉ"
-                            onClick={handleAddressChange}
-                            readOnly
-                            autoSize={{ minRows: 2, maxRows: 2 }} // Luôn hiển thị 2 hàng
-                        />
+                        <Input placeholder="Nhập địa chỉ" />
                     </Form.Item>
-                    <Modal
-                        title="Chọn địa chỉ"
-                        visible={isAddressSelectorVisible}
-                        onCancel={handleAddressSelectorClose}
-                        footer={null}
-                        destroyOnClose
-                    >
-                        <AddressSelector
-                            onClose={handleAddressSelectorClose}
-                            setAddress={(selectedAddress) => {
-                                setAddress(selectedAddress);
-                                setIsAddressSelectorVisible(false);
-                            }}
-                        />
-                    </Modal>
+
                     <Form.Item
                         label="Email"
                         name="email"
