@@ -28,17 +28,13 @@ function CheckOut() {
     useEffect(() => {
         const FetchProduct = async () => {
             try {
-                const res = await ShopingCartService.GetShoppingCartById(id);
+                const res = await ShopingCartService.GetShoppingCarts();
                 const info = await GetMyInfo();
-                const resVoucher = await ShopingCartService.GetVouchersCanUse(res.shopId);
-                const totalAmount = res.cartItems.reduce((acc, item) => {
-                    return acc + item.quantity * CaculateDiscountPrice(item.product.giaBan, item.product.phanTramGiam)
-                }, 0);
-                setCart({ ...res, totalAmount });
+
+                setCart(res);
                 setUser(info);
                 setShippingAdress(info.address)
                 setNote(`${info.userName}(${info.phoneNumber}) đặt hàng`)
-                setVouchers(resVoucher)
             } catch (error) {
                 console.error("Error fetching order data:", error);
             } finally {
@@ -142,10 +138,10 @@ function CheckOut() {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        cart.cartItems.map((cartItem, index) => {
+                                                        cart.cartDetails.map((cartItem, index) => {
                                                             return <tr key={index}>
                                                                 <td className="cart_product" style={{ width: "200px" }}>
-                                                                    <Link to={`${routePaths.productDetails}?id=${cartItem.product.productId}`}>
+                                                                    <Link to={`${routePaths.productDetails}?id=${cartItem.product._id}`}>
                                                                         <img src={`${process.env.REACT_APP_API_URL}${cartItem.product.anhDaiDien}`} alt="" width={120} height={100} /></Link>
                                                                 </td>
                                                                 <td className="cart_description">
@@ -153,13 +149,13 @@ function CheckOut() {
                                                                     <p>Web ID: {cartItem.product.productId}</p>
                                                                 </td>
                                                                 <td className="cart_price">
-                                                                    <p>{FormatCurrency(CaculateDiscountPrice(cartItem.product.giaBan, cartItem.product.phanTramGiam))}</p>
+                                                                    <p>{FormatCurrency(cartItem.price)}</p>
                                                                 </td>
                                                                 <td className="cart_price">
-                                                                    <p>{cartItem.quantity}</p>
+                                                                    <p>{cartItem.quanity}</p>
                                                                 </td>
                                                                 <td className="cart_total" id="cartTotal">
-                                                                    <p className="cart_total_price" id="totalPrice">{FormatCurrency(cartItem.quantity * CaculateDiscountPrice(cartItem.product.giaBan, cartItem.product.phanTramGiam))}</p>
+                                                                    <p className="cart_total_price" id="totalPrice">{FormatCurrency(cartItem.quanity * cartItem.price)}</p>
                                                                 </td>
 
                                                             </tr>
@@ -170,7 +166,6 @@ function CheckOut() {
                                             </table>
                                         </div>
                                     </div>
-                                    <VoucherModal setVoucherId={setVoucherId} vouchers={vouchers} totalPrice={cart.totalAmount} />
                                 </section>
 
                                 <div style={{ paddingLeft: "1em" }}>

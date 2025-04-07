@@ -21,6 +21,7 @@ const Account = () => {
             try {
                 setLoading(true);
                 const resUser = await GetMyInfo();
+                console.log(resUser)
                 setUser(resUser);
                 setAddress(resUser.address);
             } catch (error) {
@@ -86,7 +87,7 @@ const Account = () => {
                 <TabPane tab="Cập nhật thông tin" key="1">
                     <div style={{ marginTop: '10px', textAlign: 'center' }}>
                         <img
-                            src={`${process.env.REACT_APP_API_URL}${user.avatar}`}
+                            src={`${process.env.REACT_APP_API_URL}${user.avatarUrl}`}
                             alt="Preview"
                             style={{
                                 width: '100px',
@@ -102,7 +103,7 @@ const Account = () => {
                         layout="vertical"
                         onFinish={onFinishProfile}
                         initialValues={{
-                            userName: user.userName,
+                            username: user.username,
                             fullName: user.fullName,
                             email: user.email,
                             phoneNumber: user.phoneNumber,
@@ -111,7 +112,7 @@ const Account = () => {
                     >
                         <Form.Item
                             label="Tên đăng nhập"
-                            name="userName"
+                            name="username"
                             rules={[
                                 { required: true, message: 'Vui lòng nhập tên đăng nhập!' },
                                 { min: 6, message: 'Tên đăng nhập phải có ít nhất 6 ký tự!' },
@@ -141,21 +142,13 @@ const Account = () => {
                                 autoSize={{ minRows: 2, maxRows: 2 }} // Luôn hiển thị 2 hàng
                             />
                         </Form.Item>
-                        <Modal
-                            title="Chọn địa chỉ"
-                            visible={isAddressSelectorVisible}
-                            onCancel={handleAddressSelectorClose}
-                            footer={null}
-                            destroyOnClose
+                        <Form.Item
+                            label="Địa chỉ"
+                            name="address"
+                            rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
                         >
-                            <AddressSelector
-                                onClose={handleAddressSelectorClose}
-                                setAddress={(selectedAddress) => {
-                                    setAddress(selectedAddress);
-                                    setIsAddressSelectorVisible(false);
-                                }}
-                            />
-                        </Modal>
+                            <Input placeholder="Nhập địa chỉ" />
+                        </Form.Item>
 
                         <Form.Item
                             label="Email"

@@ -35,7 +35,7 @@ function ListProduct({ listProduct, uiSize }) {
                                 }}>-{product.phanTramGiam}%</p>
                                 <h2>{FormatCurrency(CaculateDiscountPrice(product.giaBan, product.phanTramGiam))}</h2>
                                 <p>{product.tenSp}</p>
-                                <a onClick={() => HandleAddToCart(product.productId)} className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Bỏ Vào Giỏ</a>
+                                <a onClick={() => HandleAddToCart(product._id)} className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Bỏ Vào Giỏ</a>
                                 <Link to={`${routePaths.productDetails}?id=${product._id}`} className="btn btn-default add-to-cart"><i className="fa fa-info-circle"></i>Xem Chi Tiết</Link>
                             </div>
                         </div>

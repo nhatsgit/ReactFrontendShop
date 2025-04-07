@@ -1,7 +1,7 @@
 import request from "../utils/request";
 
 export function GetShoppingCarts() {
-    return request.get('ShoppingCart', {
+    return request.get('/cart', {
         params: {
 
         }
@@ -12,21 +12,10 @@ export function GetShoppingCarts() {
         return null;
     })
 }
-export function GetShoppingCartById(id) {
-    return request.get(`ShoppingCart/${id}`, {
-        params: {
 
-        }
-    }).then((res) => {
-        return res.data;
-    }).catch(() => {
-        console.log("error")
-        return null;
-    })
-}
 export function addToCart(productId, quantity) {
     const requestBody = { productId, quantity }
-    return request.post(`ShoppingCart/addToCart`, requestBody)
+    return request.post(`cart/addToCart`, requestBody)
         .then((res) => {
             return res.data;
         }).catch(() => {
@@ -45,11 +34,7 @@ export function updateCartItem(productId, quantity) {
         })
 }
 export function deleteCartItem(cartItemId) {
-    return request.post(`ShoppingCart/deleteItem`, null, {
-        params: {
-            cartItemId: cartItemId
-        }
-    })
+    return request.delete(`cartDetail/${cartItemId}`)
         .then((res) => {
             return res.data;
         }).catch((e) => {
