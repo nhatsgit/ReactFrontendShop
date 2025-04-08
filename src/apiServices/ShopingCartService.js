@@ -55,12 +55,10 @@ export function GetVouchersCanUse(shopId) {
         return null;
     })
 }
-export function CheckOutCart({ shoppingCartId, shippingAddress, notes, voucherId, paymentId }) {
-    const requestBody = { shippingAddress, notes, voucherId, paymentId }
-    return request.post('ShoppingCart/checkOut', requestBody, {
-        params: {
-            shoppingCartId: shoppingCartId
-        }
+export function CheckOutCart({ shippingAddress, notes, payment }) {
+    const requestBody = { shippingAddress, notes, payment, }
+    return request.post('order/createOrderFromCart', requestBody, {
+
     }).then((res) => {
 
         return res.data;

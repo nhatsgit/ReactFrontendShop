@@ -106,7 +106,7 @@ function OrderDetails() {
                                     return <tr key={index}>
                                         <td className="cart_product" style={{ width: "200px" }}>
 
-                                            <Link to={`${routePaths.productDetails}?id=${orderDetail.product.productId}`}><img src={`https://localhost:7233${orderDetail.product.anhDaiDien}`} alt="" width="120" height="100" /></Link>
+                                            <Link to={`${routePaths.productDetails}?id=${orderDetail.product.productId}`}><img src={`${process.env.REACT_APP_API_URL}${orderDetail.product.anhDaiDien}`} alt="" width="120" height="100" /></Link>
                                         </td>
                                         <td className="cart_description">
                                             <h4><a >{orderDetail.product.tenSp}</a></h4>
@@ -116,10 +116,10 @@ function OrderDetails() {
                                             <p>{FormatCurrency(orderDetail.price)}</p>
                                         </td>
                                         <td className="cart_price">
-                                            <p>x{orderDetail.quantity}</p>
+                                            <p>x{orderDetail.quanity}</p>
                                         </td>
                                         <td className="cart_total" id="cartTotal">
-                                            <p className="cart_total_price" id="totalPrice">{FormatCurrency(orderDetail.price * orderDetail.quantity)}</p>
+                                            <p className="cart_total_price" id="totalPrice">{FormatCurrency(orderDetail.price * orderDetail.quanity)}</p>
                                         </td>
                                         <td>
 

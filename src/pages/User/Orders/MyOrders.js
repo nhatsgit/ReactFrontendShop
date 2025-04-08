@@ -7,18 +7,14 @@ import { routePaths } from "../../../routes";
 import { formatDate } from "../../../utils/FormatDate";
 function MyOrders() {
     const [orders, setOrders] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
-    const [totalPage, settotalPage] = useState(5)
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     useEffect(() => {
         const fetchApi = async () => {
             try {
-                const res = await OrderService.GetMyOrders(currentPage);
+                const res = await OrderService.GetMyOrders();
 
-                setOrders(res.items)
-                setCurrentPage(res.pageNumber)
-                settotalPage(res.pageCount)
+                setOrders(res)
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -30,25 +26,7 @@ function MyOrders() {
         }
         fetchApi();
     }, []);
-    const HandleSelectPage = async (pageNumber) => {
-        try {
-            const res = await OrderService.GetMyOrders(pageNumber);
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-            });
 
-            setOrders(res.items)
-            setCurrentPage(res.pageNumber)
-            settotalPage(res.pageCount)
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        } finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 500);
-        }
-    }
     const HandleOnClickDetail = (orderId) => {
 
 
@@ -79,7 +57,7 @@ function MyOrders() {
                                                 return <div className={`row product py-2 ${styles.orderDetail}`} key={index}>
                                                     <div className="col-md-6 d-flex">
                                                         <div className="images">
-                                                            <img src={`https://localhost:7233${orderDetail.product.anhDaiDien}`} alt="" />
+                                                            <img src={`${process.env.REACT_APP_API_URL}${orderDetail.product.anhDaiDien}`} alt="" />
                                                         </div>
                                                         <div className="context ml-3">
                                                             <p>{orderDetail.product.tenSp}</p>
@@ -91,7 +69,7 @@ function MyOrders() {
                                                             Đơn giá: {FormatCurrency(orderDetail.price)}
                                                         </h5>
                                                         <h5 className="text-dark">
-                                                            Số lượng: {orderDetail.quantity}
+                                                            Số lượng: {orderDetail.quanity}
                                                         </h5>
                                                     </div>
                                                 </div>
@@ -108,7 +86,7 @@ function MyOrders() {
                                                     <span>Thành tiền:</span>{FormatCurrency(order.totalPrice)}
                                                 </h3>
 
-                                                <button type="button" onClick={() => HandleOnClickDetail(order.orderId)} className="btn btn-fefault cart">
+                                                <button type="button" onClick={() => HandleOnClickDetail(order._id)} className="btn btn-fefault cart">
                                                     <a
 
                                                         style={{ color: "white" }}
@@ -123,14 +101,7 @@ function MyOrders() {
                                     </div>
                                 })
                             }
-                            <br></br>
-                            <ul className="pagination">
-                                {Array.from({ length: totalPage }, (_, index) => (
-                                    <li key={index} className={index === currentPage - 1 ? "active" : ""} onClick={() => HandleSelectPage(index + 1)}>
-                                        <a className="page-link">{index + 1}</a>
-                                    </li>
-                                ))}
-                            </ul>
+
                         </div>
                     </div>
                 </div>

@@ -35,7 +35,7 @@ function MyCarts() {
     const HandleDeleteCart = useCallback(async (cartItemId) => {
         try {
             setLoading(true)
-            const cartData = await ShopingCartService.deleteCartItem(cartItemId);
+            await ShopingCartService.deleteCartItem(cartItemId);
         } catch (e) {
 
         } finally {
@@ -56,10 +56,8 @@ function MyCarts() {
                 </ol>
             </div>
             <section id="cart_items" >
-                {
-
+                {myCarts ? (
                     <div className="container" >
-
                         <div className="table-responsive cart_info">
                             <table className="table table-condensed">
                                 <thead>
@@ -73,48 +71,44 @@ function MyCarts() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {
-                                        myCarts.cartDetails.map((cartItem, index) => {
-                                            return <tr key={index}>
-                                                <td className="cart_product" style={{ width: "200px" }}>
-                                                    <Link to={`${routePaths.productDetails}?id=${cartItem.product._id}`}>
-                                                        <img src={`${process.env.REACT_APP_API_URL}${cartItem.product.anhDaiDien}`} alt="" width={120} height={100} />
-                                                    </Link>
-                                                </td>
-                                                <td className="cart_description">
-                                                    <Link to={`${routePaths.productDetails}?id=${cartItem.product._id}`}>
-                                                        <h4>{cartItem.product.tenSp}</h4>
-                                                        <p>Web ID: {cartItem.product.productId}</p>
-                                                    </Link>
-                                                </td>
-                                                <td className="cart_price">
-                                                    <p>{FormatCurrency(cartItem.price)}</p>
-                                                </td>
-                                                <td className="cart_price">
-                                                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                                                        <button onClick={() => HandleUpdateQuantity(cartItem.product._id, 1)} style={{ margin: '0 5px', border: 'none', width: '20px' }}>+</button>
-                                                        <p style={{ margin: '0 10px', textAlign: 'center' }}>{cartItem.quanity}</p>
-                                                        {cartItem.quanity > 1 && (
-                                                            <button onClick={() => HandleUpdateQuantity(cartItem.product._id, -1)} style={{ margin: '0 5px', border: 'none', width: '20px' }}>-</button>
-                                                        )}
-                                                    </div>
-                                                </td>
-                                                <td className="cart_total" id="cartTotal">
-                                                    <p className="cart_total_price" id="totalPrice">{FormatCurrency(cartItem.quanity * cartItem.price)}</p>
-                                                </td>
-                                                <td className="cart_delete">
-                                                    <a className="cart_quantity_delete" onClick={() => HandleDeleteCart(cartItem._id)}><i className="fa fa-times"></i></a>
-                                                </td>
-                                            </tr>
-                                        })
-                                    }
-
+                                    {myCarts.cartDetails.map((cartItem, index) => {
+                                        return <tr key={index}>
+                                            <td className="cart_product" style={{ width: "200px" }}>
+                                                <Link to={`${routePaths.productDetails}?id=${cartItem.product._id}`}>
+                                                    <img src={`${process.env.REACT_APP_API_URL}${cartItem.product.anhDaiDien}`} alt="" width={120} height={100} />
+                                                </Link>
+                                            </td>
+                                            <td className="cart_description">
+                                                <Link to={`${routePaths.productDetails}?id=${cartItem.product._id}`}>
+                                                    <h4>{cartItem.product.tenSp}</h4>
+                                                    <p>Web ID: {cartItem.product.productId}</p>
+                                                </Link>
+                                            </td>
+                                            <td className="cart_price">
+                                                <p>{FormatCurrency(cartItem.price)}</p>
+                                            </td>
+                                            <td className="cart_price">
+                                                <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                                    <button onClick={() => HandleUpdateQuantity(cartItem.product._id, 1)} style={{ margin: '0 5px', border: 'none', width: '20px' }}>+</button>
+                                                    <p style={{ margin: '0 10px', textAlign: 'center' }}>{cartItem.quanity}</p>
+                                                    {cartItem.quanity > 1 && (
+                                                        <button onClick={() => HandleUpdateQuantity(cartItem.product._id, -1)} style={{ margin: '0 5px', border: 'none', width: '20px' }}>-</button>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td className="cart_total" id="cartTotal">
+                                                <p className="cart_total_price" id="totalPrice">{FormatCurrency(cartItem.quanity * cartItem.price)}</p>
+                                            </td>
+                                            <td className="cart_delete">
+                                                <a className="cart_quantity_delete" onClick={() => HandleDeleteCart(cartItem._id)}><i className="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                    })}
                                 </tbody>
                             </table>
                         </div>
 
                         <h1 style={{ textAlign: "right", color: "red" }}>Tổng đơn hàng: {FormatCurrency(myCarts.totalPrice)}</h1>
-
 
                         <div style={{ textAlign: "right" }}>
                             <p>
@@ -125,8 +119,9 @@ function MyCarts() {
                             </p>
                         </div>
                     </div>
-
-                }
+                ) : (
+                    <div><h2>Giỏ hàng của bạn đang trống.</h2></div>
+                )}
             </section>
         </>
     );

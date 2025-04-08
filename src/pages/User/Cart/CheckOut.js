@@ -45,45 +45,21 @@ function CheckOut() {
         }
         FetchProduct()
     }, []);
-    const openPopup = () => {
-        setIsPopupOpen(true);
-    };
-
-    const closePopup = () => {
-        setIsPopupOpen(false);
-    };
 
 
     if (loading) {
         return <div>Đang tải...</div>;
     }
     const HandleCheckOut = async (e) => {
-        if (paymentId == 1) {
-            e.preventDefault();
-            const order = await ShopingCartService.CheckOutCart({
-                shoppingCartId: cart.shoppingCartId,
-                shippingAddress: shippingAdress,
-                voucherId: voucherId,
-                paymentId: paymentId,
-                notes: note
-            })
-            navigate(`${routePaths.orderdetails}?id=${order.orderId}`)
-        } else {
-            e.preventDefault();
-            const paymentUrl = await ShopingCartService.CheckOutCart({
-                shoppingCartId: cart.shoppingCartId,
-                shippingAddress: shippingAdress,
-                voucherId: voucherId,
-                paymentId: paymentId,
-                notes: note
-            })
 
-            if (paymentUrl) {
-                window.location.href = paymentUrl;
-            } else {
-                alert("Không thể tạo URL thanh toán. Vui lòng thử lại.");
-            }
-        }
+        e.preventDefault();
+        const order = await ShopingCartService.CheckOutCart({
+            shippingAddress: shippingAdress,
+            payment: paymentId == 1 ? "Thanh toán khi nhận hàng" : "Thanh toán trên website",
+            notes: note
+        })
+        navigate(`${routePaths.orderdetails}?id=${order._id}`)
+
     };
     return (
         <>
@@ -100,14 +76,7 @@ function CheckOut() {
                                         <label className="control-label"><strong>Địa chỉ</strong></label><br />
                                         <input className="form-control" name="address" id="address" type="text" style={{ width: "500px", display: "none" }} />
                                         <textarea id="currentAddress" className="form-control" value={shippingAdress} onChange={(e) => { setShippingAdress(e.target.value) }} readOnly></textarea>
-                                        {isPopupOpen && (
-                                            <AddressSelector onClose={closePopup} setAddress={setShippingAdress}></AddressSelector>
-                                        )}
-                                        {!isPopupOpen && (
-                                            <button type="button" id="btnpopup" onClick={openPopup}>
-                                                Chọn địa chỉ khác
-                                            </button>
-                                        )}
+
                                     </div>
 
 
@@ -183,7 +152,7 @@ function CheckOut() {
                                                 required
                                             />
                                             <label className="form-check-label" htmlFor="payment_direct">
-                                                Trực tiếp
+                                                Thanh toán khi nhận hàng
                                             </label>
                                             <br />
                                             <input
@@ -196,7 +165,7 @@ function CheckOut() {
                                                 required
                                             />
                                             <label className="form-check-label" htmlFor="payment_online">
-                                                Online
+                                                Thanh toán trên website
                                             </label>
                                         </div>
 
