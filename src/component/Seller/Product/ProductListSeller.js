@@ -29,7 +29,7 @@ function ProductListSeller({ listProduct }) {
             onOk: async () => {
                 try {
                     await HideProduct(productId);
-                    const updatedProducts = products.filter(product => product.productId !== productId);
+                    const updatedProducts = products.filter(product => product._id !== productId);
                     setProducts(updatedProducts);
                     notification.success({
                         message: "Thành công",
@@ -107,16 +107,14 @@ function ProductListSeller({ listProduct }) {
                                         product.daAn ? <button className={`${styles.btn} ${styles.btn_success}`} type="button" onClick={() => { HandleChangeProductStatus(product.productId) }}>
                                             <p style={{ color: "white", textDecoration: "underline" }} >Hiện</p>
                                         </button> :
-                                            <button className={`${styles.btn} ${styles.btn_danger}`} type="button" onClick={() => { HandleChangeProductStatus(product.productId) }}>
+                                            <button className={`${styles.btn} ${styles.btn_danger}`} type="button" onClick={() => { HandleChangeProductStatus(product._id) }}>
                                                 <p style={{ color: "white", textDecoration: "underline" }}>Ẩn</p>
                                             </button>
                                     }
                                     <button className={`${styles.btn} ${styles.btn_primary}`} type="button" >
-                                        <Link to={`${routePaths.editProduct}?id=${product.productId}`} style={{ color: "white", textDecoration: "underline" }} >Chỉnh Sửa</Link>
+                                        <Link to={`${routePaths.editProduct}?id=${product._id}`} style={{ color: "white", textDecoration: "underline" }} >Chỉnh Sửa</Link>
                                     </button>
-                                    <button className={`${styles.btn} ${styles.btn_info}`} type="button">
-                                        <Link to={`${routePaths.detailProduct}?id=${product.productId}`} style={{ color: "white", textDecoration: "underline" }} >Chi Tiết</Link>
-                                    </button>
+
 
                                 </td>
                             </tr>

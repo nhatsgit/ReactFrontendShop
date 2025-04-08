@@ -28,7 +28,7 @@ function EditProduct() {
                 setBrands(resBrands);
                 setMainImagePreviewURL(`${process.env.REACT_APP_API_URL}${res.anhDaiDien}`)
                 setAdditionalImagePreviewsURL(
-                    res.productImages.map((image, index) => {
+                    res.images.map((image, index) => {
                         return `${process.env.REACT_APP_API_URL}${image.url}`
                     })
                 )
@@ -70,7 +70,7 @@ function EditProduct() {
             const result = await UpdateProduct(product, mainImage, additionalImages);
             alert("Cập nhật thành công!");
             console.log(result);
-            navigate(`${routePaths.detailProduct}?id=${product.productId}`)
+            navigate(`${routePaths.editProduct}?id=${product._id}`)
         } catch (error) {
             alert("Đã xảy ra lỗi");
             console.error(error);
@@ -98,10 +98,6 @@ function EditProduct() {
                     <input name="moTa" className="form-control" value={product.moTa} onChange={handleInputChange} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="ThongSo" className="control-label">ThongSo</label>
-                    <input name="thongSo" className="form-control" value={product.thongSo} onChange={handleInputChange} />
-                </div>
-                <div className="form-group">
                     <label htmlFor="GiaNhap" className="control-label">GiaNhap</label>
                     <input name="giaNhap" className="form-control" type="number" min={1000} value={product.giaNhap} onChange={handleInputChange} />
                 </div>
@@ -118,11 +114,11 @@ function EditProduct() {
                     <input name="phanTramGiam" className="form-control" type="number" min={0} max={99} value={product.phanTramGiam} onChange={handleInputChange} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="ProductCategoryId" className="control-label">ProductCategoryId</label>
-                    <select name="productCategoryId" value={product.productCategoryId} onChange={handleInputChange} className="form-control">
+                    <label htmlFor="category" className="control-label">ProductCategoryId</label>
+                    <select name="category" value={product.category.tenLoai} onChange={handleInputChange} className="form-control">
                         {categories.map((category, index) => {
                             return (
-                                <option key={index} value={category.productCategoryId}>
+                                <option key={index} value={category.tenLoai}>
                                     {category.tenLoai}
                                 </option>
                             );
@@ -130,12 +126,12 @@ function EditProduct() {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="BrandId" className="control-label">BrandId</label>
-                    <select name="brandId" className="form-control" value={product.brandId} onChange={handleInputChange}  >
+                    <label htmlFor="brand" className="control-label">BrandId</label>
+                    <select name="brand" className="form-control" value={product.brand.tenLoai} onChange={handleInputChange}  >
                         {brands.map((brand, index) => {
                             return (
-                                <option key={index} value={brand.brandId}>
-                                    {brand.tenNhanHieu}
+                                <option key={index} value={brand.tenLoai}>
+                                    {brand.tenLoai}
                                 </option>
                             );
                         })}

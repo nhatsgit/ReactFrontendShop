@@ -6,20 +6,14 @@ import ExcelForm from "../../../component/Seller/Product/ExcelForm";
 
 function AddProduct() {
     const [product, setProduct] = useState({
-        ProductId: 0,
         TenSp: "",
-        AnhDaiDien: "",
         MoTa: "",
-        ThongSo: "",
         GiaNhap: "",
         GiaBan: "",
         SoLuongCon: 0,
         PhanTramGiam: 0,
-        DiemDanhGia: 0,
-        DaAn: false,
-        ProductCategoryId: 1,
-        BrandId: 1,
-        ShopId: 0,
+        category: "Laptop",
+        brand: "XiaoMi",
     });
     const [mainImage, setMainImage] = useState(null);
     const [mainImagePreviewURL, setMainImagePreviewURL] = useState(null);
@@ -204,18 +198,18 @@ function AddProduct() {
                             <span className="text_danger field_validation_valid"></span>
                         </div>
                         <div className={styles.form_group}>
-                            <label className="control_label" htmlFor="ProductCategoryId">
-                                ProductCategoryId
+                            <label className="control_label" htmlFor="category">
+                                category
                             </label>
                             <select
                                 className={styles.form_control}
-                                name="ProductCategoryId"
-                                value={product.ProductCategoryId}
+                                name="category"
+                                value={product.category}
                                 onChange={handleInputChange}
                             >
                                 {categories.map((category, index) => {
                                     return (
-                                        <option key={index} value={category.productCategoryId}>
+                                        <option key={index} value={category.tenLoai}>
                                             {category.tenLoai}
                                         </option>
                                     );
@@ -228,15 +222,15 @@ function AddProduct() {
                             </label>
                             <select
                                 className={styles.form_control}
-                                name="BrandId"
-                                value={product.BrandId}
+                                name="brand"
+                                value={product.brand}
                                 onChange={handleInputChange}
                             >
                                 <option value="1">XiaoMi</option>
                                 {brands.map((brand, index) => {
                                     return (
-                                        <option key={index} value={brand.brandId}>
-                                            {brand.tenNhanHieu}
+                                        <option key={index} value={brand.tenLoai}>
+                                            {brand.tenLoai}
                                         </option>
                                     );
                                 })}

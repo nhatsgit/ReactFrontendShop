@@ -4,22 +4,47 @@ export function QueryProductCurrentShop({
     keyword = null,
     categoryId = null,
     brandId = null,
+    shopId = null,
     minPrice = null,
     maxPrice = null,
-    daAn = null,
-    daHet = null,
     pageNumber = 1,
     pageSize = 10 }) {
-    return request.get('seller/Products/query', {
+    return request.get('Products/queryForShop', {
         params: {
             keyword: keyword,
             categoryId: categoryId,
             brandId: brandId,
+            shopId: shopId,
             minPrice: minPrice,
             maxPrice: maxPrice,
-            daAn: daAn,
-            daHet: daHet,
-            pageNumber: pageNumber,
+            page: pageNumber,
+            pageSize: pageSize,
+        }
+    }).then((res) => {
+        return res.data;
+    }).catch(() => {
+        console.log("error")
+        return null;
+    })
+}
+export function QueryProductDeleted({
+    keyword = null,
+    categoryId = null,
+    brandId = null,
+    shopId = null,
+    minPrice = null,
+    maxPrice = null,
+    pageNumber = 1,
+    pageSize = 10 }) {
+    return request.get('Products/deleted', {
+        params: {
+            keyword: keyword,
+            categoryId: categoryId,
+            brandId: brandId,
+            shopId: shopId,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
+            page: pageNumber,
             pageSize: pageSize,
         }
     }).then((res) => {
@@ -41,10 +66,10 @@ export function CreateProduct(product, mainImage, additionalImages) {
     }
     if (additionalImages && additionalImages.length > 0) {
         additionalImages.forEach((image, index) => {
-            formData.append(`listImages`, image);
+            formData.append(`Images`, image);
         });
     }
-    return request.post(`seller/Products`, formData)
+    return request.post(`products`, formData)
         .then((res) => {
             return res.data;
         }).catch(() => {
@@ -54,7 +79,7 @@ export function CreateProduct(product, mainImage, additionalImages) {
 }
 export function HideProduct(productId) {
 
-    return request.delete(`seller/Products/${productId}`)
+    return request.delete(`Products/${productId}`)
         .then((res) => {
             return res.data;
         }).catch(() => {
@@ -63,8 +88,20 @@ export function HideProduct(productId) {
         })
 }
 
+// export function GetProductSellerById(id) {
+//     return request.get(`seller/Products/${id}`, {
+//         params: {
+
+//         }
+//     }).then((res) => {
+//         return res.data;
+//     }).catch(() => {
+//         console.log("error")
+//         return null;
+//     })
+// }
 export function GetProductSellerById(id) {
-    return request.get(`seller/Products/${id}`, {
+    return request.get(`Products/${id}`, {
         params: {
 
         }
@@ -102,11 +139,7 @@ export function UpdateProduct(product, mainImage, additionalImages) {
             formData.append(`listImages`, image);
         });
     }
-    return request.put(`seller/Products/${product.productId}`, formData, {
-        params: {
-            id: product.productId
-        }
-    })
+    return request.put(`Products/${product._id}`, formData)
         .then((res) => {
             return res.data;
         }).catch(() => {

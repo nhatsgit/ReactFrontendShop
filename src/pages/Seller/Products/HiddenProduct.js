@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../Seller.module.css"
-import { QueryProductCurrentShop } from "../../../apiServices/Seller/ProductSellerServices";
+import { QueryProductCurrentShop, QueryProductDeleted } from "../../../apiServices/Seller/ProductSellerServices";
 import ProductListSeller from "../../../component/Seller/Product/ProductListSeller";
 function HiddenProduct() {
     const [products, setProducts] = useState([]);
@@ -9,12 +9,11 @@ function HiddenProduct() {
     const [totalPage, settotalPage] = useState(5)
     const [currentFilter, setCurrentFilter] = useState({
         keyword: null,
-        daAn: true
     });
     useEffect(() => {
         const fetchApi = async () => {
             try {
-                const res = await QueryProductCurrentShop({ ...currentFilter, pageSize: 5, pageNumber: currentPage });
+                const res = await QueryProductDeleted({ ...currentFilter, pageSize: 5, pageNumber: currentPage });
                 setProducts(res.items);
                 setCurrentPage(res.pageNumber)
                 settotalPage(res.pageCount)

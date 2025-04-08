@@ -145,7 +145,7 @@ export function GetCategories() {
     })
 }
 export function GetBrands() {
-    return request.get(`Brands`, {
+    return request.get(`Brand`, {
         params: {
 
         }
