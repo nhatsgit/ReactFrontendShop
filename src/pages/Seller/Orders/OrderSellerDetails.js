@@ -46,14 +46,10 @@ function OrderSellerDetails() {
                     <h1>Thông tin đơn hàng</h1>
 
                     <p style={{ color: "darkblue", fontSize: "15px" }}>
-                        {`${order.orderStatus?.tenTrangThai} ` || 'Lỗi...'}
-                        {order.orderStatus?.orderStatusId < 5 ? (
-                            <button style={{ backgroundColor: "transparent", color: "blue", border: "2px solid blue" }} onClick={HandleUpdateStatus}>Cập nhật trạng thái</button>
-                        ) : order.orderStatus?.orderStatusId === 9 ? (
-                            <button style={{ backgroundColor: "transparent", color: "blue", border: "2px solid blue" }} onClick={HandleUpdateStatus}>Cập nhật trạng thái</button>
-                        ) : order.orderStatus?.orderStatusId === 10 ? (
-                            <button style={{ backgroundColor: "transparent", color: "blue", border: "2px solid blue" }} onClick={HandleUpdateStatus}>Cập nhật trạng thái</button>
-                        ) : null}
+                        <h3> {order.orderStatus?.tenTrangThai || 'Loading...'}</h3>
+
+                        <button style={{ backgroundColor: "transparent", color: "red", border: "2px solid red" }} onClick={HandleUpdateStatus}>Cập nhật trạng thái</button>
+
 
                     </p>
                     <div className="table-responsive cart_info">
@@ -72,7 +68,7 @@ function OrderSellerDetails() {
                                 {order.orderDetails.map((orderDetail, index) => {
                                     return <tr key={index}>
                                         <td className="cart_product" style={{ width: "200px" }}>
-                                            <a ><img src={`https://localhost:7233${orderDetail.product.anhDaiDien}`} alt="" width="60" height="50" /></a>
+                                            <a ><img src={`${process.env.REACT_APP_API_URL}${orderDetail.product.anhDaiDien}`} alt="" width="60" height="50" /></a>
                                         </td>
                                         <td className="cart_description">
                                             <h4><a >{orderDetail.product.tenSp}</a></h4>
@@ -82,10 +78,10 @@ function OrderSellerDetails() {
                                             <p>{FormatCurrency(orderDetail.price)}</p>
                                         </td>
                                         <td className="cart_price">
-                                            <p>x{orderDetail.quantity}</p>
+                                            <p>x{orderDetail.quanity}</p>
                                         </td>
                                         <td className="cart_total" id="cartTotal">
-                                            <p className="cart_total_price" id="totalPrice">{FormatCurrency(orderDetail.price * orderDetail.quantity)}</p>
+                                            <p className="cart_total_price" id="totalPrice">{FormatCurrency(orderDetail.price * orderDetail.quanity)}</p>
                                         </td>
 
 
@@ -143,26 +139,7 @@ function OrderSellerDetails() {
                             <dd className="col-sm-9">
                                 {order.payment?.tenLoai || 'Loading...'}
                             </dd>
-                            <dt className="col-sm-3">
-                                Mã Giảm Giá:
-                            </dt>
 
-
-                            <dd className="col-sm-9">
-                                {order.voucher?.phanTramGiam === 0 ? (
-                                    "Không có"
-                                ) : (
-                                    <>
-                                        {order.voucher?.voucherCode}: giảm {order.voucher?.phanTramGiam}% tổng đơn hàng
-                                        {order.voucher?.donToiThieu > 0 && (
-                                            <> , đơn tối thiểu {FormatCurrency(order.voucher?.donToiThieu || 0)} </>
-                                        )}
-                                        {order.voucher?.giamToiDa > 0 && (
-                                            <> , giảm tối đa {FormatCurrency(order.voucher?.giamToiDa || 0)} </>
-                                        )}
-                                    </>
-                                )}
-                            </dd>
 
 
 

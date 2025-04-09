@@ -21,11 +21,11 @@ function OrderListSeller({ orderList }) {
                                 return <div key={index} className={`${styles.row} ${styles.product} ${styles.py_2}`} >
                                     <div className={`${styles.col_md_6} ${styles.d_flex}`}>
                                         <div className="images">
-                                            <img src={`https://localhost:7233${orderDetail.product.anhDaiDien}`} height={75} alt="" />
+                                            <img src={`${process.env.REACT_APP_API_URL}${orderDetail.product.anhDaiDien}`} height={75} alt="" />
                                         </div>
                                         <div className={`${styles.context} ${styles.ml3}`}>
                                             <p>{orderDetail.product.tenSp}</p>
-                                            x {orderDetail.quantity}
+                                            x {orderDetail.quanity}
                                         </div>
                                     </div>
                                     <div className={`${styles.col_md_6} ${styles.text_right}`}>
@@ -41,7 +41,7 @@ function OrderListSeller({ orderList }) {
                                 </h4></div>
                             <div className={`${styles.col_md_6} ${styles.text_right}`}>
                                 <h3 style={{ color: "blue" }}><span>Thành tiền:</span>{FormatCurrency(order.totalPrice)}</h3>
-                                <button className={`${styles.btn} ${styles.btn_primary}`} ><Link to={`${routePaths.orderSellerDetails}?id=${order.orderId}`} className={styles.link} >Xem chi tiết</Link></button>
+                                <button className={`${styles.btn} ${styles.btn_primary}`} ><Link to={`${routePaths.orderSellerDetails}?id=${order._id}`} className={styles.link} >Xem chi tiết</Link></button>
                             </div>
                         </div>
                     </div>

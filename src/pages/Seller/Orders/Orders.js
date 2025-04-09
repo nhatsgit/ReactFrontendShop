@@ -6,8 +6,7 @@ import { routePaths } from "../../../routes";
 import OrderListSeller from "../../../component/Seller/Order/OrderListSeller";
 function Orders() {
     const [orders, setOrders] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
-    const [totalPage, settotalPage] = useState(5)
+
     const [loading, setLoading] = useState(true);
     const [dateSearch, setDateSearch] = useState()
     const [currentDateSearch, setCurrentDateSearch] = useState()
@@ -15,11 +14,10 @@ function Orders() {
     useEffect(() => {
         const fetchApi = async () => {
             try {
-                const res = await GetAllOrders(currentPage);
+                const res = await GetAllOrders();
 
-                setOrders(res.items)
-                setCurrentPage(res.pageNumber)
-                settotalPage(res.pageCount)
+                setOrders(res)
+
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -31,25 +29,7 @@ function Orders() {
         }
         fetchApi();
     }, []);
-    const HandleSelectPage = async (pageNumber) => {
-        try {
-            const res = await GetAllOrders(pageNumber, currentDateSearch);
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-            });
 
-            setOrders(res.items)
-            setCurrentPage(res.pageNumber)
-            settotalPage(res.pageCount)
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        } finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 100);
-        }
-    }
     const HandleSearchOrders = async () => {
         try {
             const res = await GetAllOrders(1, dateSearch);
@@ -59,8 +39,7 @@ function Orders() {
             });
 
             setOrders(res.items)
-            setCurrentPage(res.pageNumber)
-            settotalPage(res.pageCount)
+
             setCurrentDateSearch(dateSearch)
             console.log(dateSearch)
         } catch (error) {
@@ -89,7 +68,7 @@ function Orders() {
                 {orders ? <>
                     <OrderListSeller orderList={orders}></OrderListSeller>
                     <hr />
-                    <center>
+                    {/* <center>
                         <ul className="pagination">
                             {Array.from({ length: totalPage }, (_, index) => (
                                 <li key={index} className={index === currentPage - 1 ? "active" : ""} onClick={() => HandleSelectPage(index + 1)}>
@@ -97,7 +76,7 @@ function Orders() {
                                 </li>
                             ))}
                         </ul>
-                    </center>
+                    </center> */}
                 </> : <h1>Không có</h1>}
             </section>
         </section>);

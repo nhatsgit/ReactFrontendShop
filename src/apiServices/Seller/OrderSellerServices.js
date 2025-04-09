@@ -1,10 +1,9 @@
 import request from "../../utils/request";
 
 export function GetAllOrders(currentPage, date) {
-    return request.get('seller/Orders', {
+    return request.get('Order/getAllOrders', {
         params: {
-            pageNumber: currentPage,
-            pageSize: 5,
+
             date: date
         }
     }).then((res) => {
@@ -86,7 +85,7 @@ export function GetReturnedOrders(currentPage) {
     })
 }
 export function GetOrderSellerById(id) {
-    return request.get(`seller/Orders/${id}`)
+    return request.get(`order/getOrderByOrderId/${id}`)
         .then((res) => {
             return res.data;
         }).catch((e) => {
@@ -94,7 +93,7 @@ export function GetOrderSellerById(id) {
         })
 }
 export function UpdateStatus(id) {
-    return request.post(`seller/Orders/UpdateStatus`, null, {
+    return request.put(`Order/updateOrderStatus`, null, {
         params: {
             orderId: id
         }
