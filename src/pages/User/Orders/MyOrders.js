@@ -49,57 +49,63 @@ function MyOrders() {
                         <div className="col-sm-12 padding-right">
                             <h1 style={{ textAlign: "center" }}>Đơn hàng của tôi</h1>
                             {
-                                orders.map((order, index) => {
-                                    return <div className="container sum" style={{ border: "2px solid black" }} key={index}>
-                                        <div className="second p-3">
-                                            <strong>Ngày đặt: {formatDate(order.orderDate)}</strong>
-                                            {order.orderDetails.map((orderDetail, index) => {
-                                                return <div className={`row product py-2 ${styles.orderDetail}`} key={index}>
-                                                    <div className="col-md-6 d-flex">
-                                                        <div className="images">
-                                                            <img src={`${process.env.REACT_APP_API_URL}${orderDetail.product.anhDaiDien}`} alt="" />
-                                                        </div>
-                                                        <div className="context ml-3">
-                                                            <p>{orderDetail.product.tenSp}</p>
+                                orders && orders.length > 0 ? (
+                                    orders.map((order, index) => {
+                                        return <div className="container sum" style={{ border: "2px solid black" }} key={index}>
+                                            <div className="second p-3">
+                                                <strong>Ngày đặt: {formatDate(order.orderDate)}</strong>
+                                                {order.orderDetails.map((orderDetail, index) => {
+                                                    return <div className={`row product py-2 ${styles.orderDetail}`} key={index}>
+                                                        <div className="col-md-6 d-flex">
+                                                            <div className="images">
+                                                                <img src={`${process.env.REACT_APP_API_URL}${orderDetail.product.anhDaiDien}`} alt="" />
+                                                            </div>
+                                                            <div className="context ml-3">
+                                                                <p>{orderDetail.product.tenSp}</p>
 
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-6 text-right">
+                                                            <h5 className="text-dark">
+                                                                Đơn giá: {FormatCurrency(orderDetail.price)}
+                                                            </h5>
+                                                            <h5 className="text-dark">
+                                                                Số lượng: {orderDetail.quanity}
+                                                            </h5>
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-6 text-right">
-                                                        <h5 className="text-dark">
-                                                            Đơn giá: {FormatCurrency(orderDetail.price)}
-                                                        </h5>
-                                                        <h5 className="text-dark">
-                                                            Số lượng: {orderDetail.quanity}
-                                                        </h5>
-                                                    </div>
+                                                })}
+
+
+                                            </div>
+                                            <div className="row third py-3" style={{ borderTop: "1px solid grey", width: "99%" }}>
+                                                <div className="col-md-6">
+                                                    <h4 style={{ color: "blue" }}>{order.orderStatus?.tenTrangThai || "Đơn hàng lỗi"}</h4>
                                                 </div>
-                                            })}
+                                                <div className="col-md-6 text-right">
+                                                    <h3 style={{ color: "blue" }}>
+                                                        <span>Thành tiền:</span>{FormatCurrency(order.totalPrice)}
+                                                    </h3>
 
+                                                    <button type="button" onClick={() => HandleOnClickDetail(order._id)} className="btn btn-fefault cart">
+                                                        <a
 
-                                        </div>
-                                        <div className="row third py-3" style={{ borderTop: "1px solid grey", width: "99%" }}>
-                                            <div className="col-md-6">
-                                                <h4 style={{ color: "blue" }}>{order.orderStatus?.tenTrangThai || "Đơn hàng lỗi"}</h4>
-                                            </div>
-                                            <div className="col-md-6 text-right">
-                                                <h3 style={{ color: "blue" }}>
-                                                    <span>Thành tiền:</span>{FormatCurrency(order.totalPrice)}
-                                                </h3>
-
-                                                <button type="button" onClick={() => HandleOnClickDetail(order._id)} className="btn btn-fefault cart">
-                                                    <a
-
-                                                        style={{ color: "white" }}
-                                                        onMouseOver={(event) => (event.target.style.color = 'black')}
-                                                        onMouseOut={(event) => (event.target.style.color = 'white')}
-                                                    >
-                                                        Xem chi tiết
-                                                    </a>
-                                                </button>
+                                                            style={{ color: "white" }}
+                                                            onMouseOver={(event) => (event.target.style.color = 'black')}
+                                                            onMouseOut={(event) => (event.target.style.color = 'white')}
+                                                        >
+                                                            Xem chi tiết
+                                                        </a>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
+                                    })
+                                ) : (
+                                    <div style={{ textAlign: "center", marginTop: "20px" }}>
+                                        <h3>Không có đơn hàng nào.</h3>
                                     </div>
-                                })
+                                )
                             }
 
                         </div>
